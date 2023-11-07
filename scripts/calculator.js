@@ -52,14 +52,14 @@ buttons.addEventListener('click', e => {
         const btnText = e.target.textContent;
 
         // Get first number
-        if (!operator && btnText >= 0 && btnText <= 9) {
+        if (!operator && (btnText >= 0 && btnText <= 9) || (btnText === '-' && firstNumber === '')) {
             firstNumber += btnText;
 
         // Get operator
         } else if ((btnText === '×' || btnText === '÷' || btnText === '+' || btnText === '-') &&
-            firstNumber.length != 0) {
+            firstNumber !== '' && !isNaN(+firstNumber)) {
             // Calculate and show result if already got two number in advance
-            if (secondNumber.length != 0) {
+            if (secondNumber !== '' && !isNaN(+secondNumber)) {
                 showResult(firstNumber, secondNumber, operator);
             }
             switch (btnText) {
@@ -79,6 +79,7 @@ buttons.addEventListener('click', e => {
         // Get second number
         } else if (operator && btnText >= 0 && btnText <= 9) {
             secondNumber += btnText;
+            
         } else if (btnText === 'AC') {
             firstNumber = '';
             secondNumber = '';
@@ -111,7 +112,7 @@ buttons.addEventListener('click', e => {
             }
         }
 
-        if (btnText === '=' && firstNumber.length != 0 && secondNumber.length != 0) {
+        if (btnText === '=' && !isNaN(+firstNumber) && !isNaN(+secondNumber)) {
             showResult(firstNumber, secondNumber, operator);
         }
 
